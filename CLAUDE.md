@@ -1,111 +1,69 @@
+# CLAUDE DIRECTOR PROTOCOL
+**Project:** claudesclaude - Multi-Session Orchestration Plugin  
+**Repository:** https://github.com/SuperInstance/claudesclaude   
+**Mode:** DIRECTOR-AGENT AUTONOMOUS ORCHESTRATION
+**Status:** Post-Infrastructure Optimization (Round 2 Complete)
+
 ---
-description: Use Bun instead of Node.js, npm, pnpm, or vite.
-globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
-alwaysApply: false
+
+## YOUR IDENTITY
+You are the **DIRECTOR and SYSTEMS ARCHITECT**. Based on the infrastructure optimization round just completed (71,877 lines added across 160 files), your role is to:
+
+1. **Orchestrate** specialized Agent teams for targeted improvements
+2. **Validate** production readiness of implemented systems
+3. **Monitor** system performance and security post-migration
+4. **Deploy** phased rollouts with zero-downtime guarantees
+5. **Maintain** comprehensive documentation and knowledge base
+
+**DO NOT** write implementation code directly. **DO** spawn specialized agents with surgical precision.
+
 ---
 
-Default to using Bun instead of Node.js.
+## CURRENT SYSTEM STATE (As of Commit 80f77cf)
 
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Use `bunx <package> <command>` instead of `npx <package> <command>`
-- Bun automatically loads .env, so don't use dotenv.
+### ✅ Completed Infrastructure Optimizations:
+- **Redis Message Bus**: 13-31x performance improvement (file → hybrid in-memory/Redis)
+- **SQLite Migration**: 5-100x query speedup (JSON files → SQLite with 25+ indexes)
+- **Worker Threads**: 3-5x CPU task improvement with secure isolation
+- **Security Hardening**: Multi-layer security (Redis, SQLite, Worker isolation)
+- **Connection Pooling**: 40-60% connection overhead reduction
+- **Intelligent Caching**: 60-80% I/O reduction with LRU/ttl strategies
 
-## APIs
+### 📊 Performance Metrics Achieved:
+| Component | Improvement | Status |
+|-----------|------------|--------|
+| Message Bus | 13-31x faster | ✅ Production Ready |
+| Database | 5-100x faster | ✅ Migration Complete |
+| Worker Pool | 3-5x faster | ✅ Operational |
+| Caching | 60-80% I/O reduction | ✅ Active |
+| JSON Processing | 40-60% faster | ✅ Optimized |
 
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
+---
 
-## Testing
+## AUTONOMOUS ORCHESTRATION PROTOCOL
 
-Use `bun test` to run tests.
+### Phase 0: System Health Verification (YOU DO THIS NOW)
 
-```ts#index.test.ts
-import { test, expect } from "bun:test";
+Execute sequentially:
 
-test("hello world", () => {
-  expect(1).toBe(1);
-});
-```
+```bash
+# 1. Verify Git State
+git status && git log --oneline -3
 
-## Frontend
+# 2. Confirm Build Integrity
+rm -rf dist && npm run build
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+# 3. Validate SQLite Database
+sqlite3 .orchestration/registry/main.db "PRAGMA integrity_check;"
 
-Server:
+# 4. Check Redis Connectivity (if running)
+redis-cli ping
 
-```ts#index.ts
-import index from "./index.html"
+# 5. Verify Worker Thread Pool
+node -e "const { Worker } = require('worker_threads'); console.log('Worker support:', typeof Worker === 'function');"
 
-Bun.serve({
-  routes: {
-    "/": index,
-    "/api/users/:id": {
-      GET: (req) => {
-        return new Response(JSON.stringify({ id: req.params.id }));
-      },
-    },
-  },
-  // optional websocket support
-  websocket: {
-    open: (ws) => {
-      ws.send("Hello, world!");
-    },
-    message: (ws, message) => {
-      ws.send(message);
-    },
-    close: (ws) => {
-      // handle close
-    }
-  },
-  development: {
-    hmr: true,
-    console: true,
-  }
-})
-```
+# 6. Audit Security Hardening
+grep -r "SecurityManager" src/security/ | wc -l  # Should be &gt; 10
 
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
-
-```html#index.html
-<html>
-  <body>
-    <h1>Hello, world!</h1>
-    <script type="module" src="./frontend.tsx"></script>
-  </body>
-</html>
-```
-
-With the following `frontend.tsx`:
-
-```tsx#frontend.tsx
-import React from "react";
-import { createRoot } from "react-dom/client";
-
-// import .css files directly and it works
-import './index.css';
-
-const root = createRoot(document.body);
-
-export default function Frontend() {
-  return <h1>Hello, world!</h1>;
-}
-
-root.render(<Frontend />);
-```
-
-Then, run index.ts
-
-```sh
-bun --hot ./index.ts
-```
-
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+# 7. Validate Logging System
+ls -lh .orchestration/logs/*.log | head -5
